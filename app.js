@@ -1,10 +1,5 @@
 const express = require('express');
 const app = express();
-
-// const myRoutes = require('./api/routes/data');
-
-// app.use('/data' , myRoutes);
-
 const body = require('body-parser');
 
 var admin = require("firebase-admin");
@@ -28,5 +23,23 @@ app.get('/', (req, res) => {
         res.json(snapshot.val())
     })
 })
+
+app.get('/:folderName', (req, res) => {
+
+    const folderName = req.params.folderName;
+    database.ref(folderName).on('value', function(snapshot) {
+        res.json(snapshot.val())
+    });
+})
+
+app.get('/:folderName/:skillName', (req, res) => {
+
+    const folderName = req.params.folderName;
+    const skillName = req.params.skillName;
+    database.ref(folderName).child(skillName).on('value', function(snapshot) {
+        res.json(snapshot.val())
+    });
+})
+
 
 module.exports = app;
