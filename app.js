@@ -24,6 +24,14 @@ app.get('/', (req, res) => {
     })
 })
 
+app.get('/:folderName', (req, res) => {
+
+    const folderName = req.params.folderName;
+    database.ref(folderName).on('value', function(snapshot) {
+        res.json(snapshot.val())
+    });
+})
+
 app.get('/:folderName/:number', (req, res) => {
 
     const folderName = req.params.folderName;
