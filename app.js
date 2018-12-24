@@ -24,19 +24,21 @@ app.get('/', (req, res) => {
     })
 })
 
-app.get('/:folderName', (req, res) => {
+app.get('/:folderName/:number', (req, res) => {
 
     const folderName = req.params.folderName;
-    database.ref(folderName).on('value', function(snapshot) {
+    const number = req.params.number;
+    database.ref(folderName).child(number).on('value', function(snapshot) {
         res.json(snapshot.val())
     });
 })
 
-app.get('/:folderName/:skillName', (req, res) => {
+app.get('/:folderName/:skillName/:number', (req, res) => {
 
     const folderName = req.params.folderName;
     const skillName = req.params.skillName;
-    database.ref(folderName).child(skillName).on('value', function(snapshot) {
+    const number = req.params.number;
+    database.ref(folderName).child(skillName).child(number).on('value', function(snapshot) {
         res.json(snapshot.val())
     });
 })
