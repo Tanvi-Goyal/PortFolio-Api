@@ -27,21 +27,15 @@ app.get('/', (req, res) => {
 app.get('/:folderName', (req, res) => {
 
     const folderName = req.params.folderName;
-    database.ref(folderName).on('value', function(snapshot) {
+    database.ref(folderName).once('value', function(snapshot) {
         var arr = [];
         snapshot.forEach(function(child) {
-            console.log(child.key+": "+child.val());
+            console.log(JSON.stringify(child.val()));
             arr.push(child.val());
           });
-        // var response = (snapshot.val());
-        // console.log(Object.keys(response).length);
-        // var k = "02";
-        // for(var i = 0 ; i < Object.keys(response).length ; i++){
-        //     res.send(snapshot.val()[k]);
-        //     k = "02";
-        // }
 
         res.send(arr);
+
     });
 })
 
@@ -54,13 +48,20 @@ app.get('/:folderName/:number', (req, res) => {
     });
 })
 
-app.get('/:folderName/:skillName/:number', (req, res) => {
+app.get('/:folderName/:skillName', (req, res) => {
 
     const folderName = req.params.folderName;
     const skillName = req.params.skillName;
     const number = req.params.number;
-    database.ref(folderName).child(skillName).child(number).on('value', function(snapshot) {
-        res.json(snapshot.val())
+    database.ref(folderName).child(skillName).on('value', function(snapshot) {
+        var arr = [];
+        snapshot.forEach(function(child) {
+            console.log(JSON.stringify(child.val()));
+            arr.push(child.val());
+          });
+
+        res.send(arr);
+
     });
 })
 
