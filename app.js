@@ -28,7 +28,20 @@ app.get('/:folderName', (req, res) => {
 
     const folderName = req.params.folderName;
     database.ref(folderName).on('value', function(snapshot) {
-        res.json(snapshot.val())
+        var arr = [];
+        snapshot.forEach(function(child) {
+            console.log(child.key+": "+child.val());
+            arr.push(child.val());
+          });
+        // var response = (snapshot.val());
+        // console.log(Object.keys(response).length);
+        // var k = "02";
+        // for(var i = 0 ; i < Object.keys(response).length ; i++){
+        //     res.send(snapshot.val()[k]);
+        //     k = "02";
+        // }
+
+        res.send(arr);
     });
 })
 
