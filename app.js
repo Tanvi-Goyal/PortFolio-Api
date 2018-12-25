@@ -52,7 +52,6 @@ app.get('/:folderName/:skillName', (req, res) => {
 
     const folderName = req.params.folderName;
     const skillName = req.params.skillName;
-    const number = req.params.number;
     database.ref(folderName).child(skillName).on('value', function(snapshot) {
         var arr = [];
         snapshot.forEach(function(child) {
