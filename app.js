@@ -39,27 +39,18 @@ app.get('/:folderName', (req, res) => {
     });
 })
 
-app.get('/:folderName/:number', (req, res) => {
-
-    const folderName = req.params.folderName;
-    const number = req.params.number;
-    database.ref(folderName).child(number).on('value', function(snapshot) {
-        res.json(snapshot.val())
-    });
-})
-
 app.get('/:folderName/:skillName', (req, res) => {
 
     const folderName = req.params.folderName;
     const skillName = req.params.skillName;
-    database.ref(folderName).child(skillName).on('value', function(snapshot) {
-        var arr = [];
+    database.ref(folderName).child(skillName).once('value', function(snapshot) {
+        var array = [];
         snapshot.forEach(function(child) {
             console.log(JSON.stringify(child.val()));
-            arr.push(child.val());
+            array.push(child.val());
           });
 
-        res.send(arr);
+        res.send(array);
 
     });
 })
